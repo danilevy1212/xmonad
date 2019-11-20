@@ -99,10 +99,10 @@ myTabConfig = def
   }
 
 myLayoutHook =
-  (smartBorders $ spacingRaw True (Border 0 10 10 10) True (Border 10 10 10 10) True $ Grid (16/9)) |||
-  -- (smartBorders $ smartSpacingWithEdge 4 $ ResizableTall 1 (3/100) (1/2) []) |||
-  -- (smartBorders $ smartSpacingWithEdge 4 $ Mirror (ResizableTall 1 (3/100) (1/2) [])) |||
-  (smartBorders $ spacingRaw True (Border 0 10 10 10) True (Border 10 10 10 10) True $ TwoPane (3/100) (1/2)) |||
+  -- (smartBorders $ spacingRaw True (Border 0 10 10 10) True (Border 10 10 10 10) True $ Grid (16/9)) |||
+  (smartBorders $ smartSpacingWithEdge 4 $ ResizableTall 1 (3/100) (1/2) []) |||
+  (smartBorders $ smartSpacingWithEdge 4 $ Mirror (ResizableTall 1 (3/100) (1/2) [])) |||
+  -- (smartBorders $ spacingRaw True (Border 0 10 10 10) True (Border 10 10 10 10) True $ TwoPane (3/100) (1/2)) |||
   (noBorders $ tabbed shrinkText myTabConfig)
 
 conf = def

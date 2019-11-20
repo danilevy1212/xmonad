@@ -6,7 +6,7 @@ xset r rate 200 50 &
 xsetroot -solid black
 trayer --edge top --align right --SetDockType true --SetPartialStrut true \
        --expand true --width 15 --transparent true --alpha 0 --tint 0x283339 --height 21 \
-       --monitor 1 --iconspacing 4 &
+       --monitor 0 --iconspacing 4 &
 nm-applet &
 dropbox start &
 pactl load-module module-bluetooth-discover &
