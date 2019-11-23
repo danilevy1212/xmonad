@@ -1,0 +1,12 @@
+#!/bin/sh
+
+_PICTURES=''
+
+for pic in ~/Pictures/Wallpapers/*; do
+    _PICTURES+="$pic "
+done
+
+while [ true ]; do
+    feh --bg-fill -z $_PICTURES
+    sleep 1h 30m
+done
