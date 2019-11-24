@@ -7,6 +7,6 @@ for pic in ~/Pictures/Wallpapers/*; do
 done
 
 while [ true ]; do
-    feh --bg-fill -z $_PICTURES
-    sleep 1h 30m
+    feh --bg-scale --no-fehbg -z $_PICTURES
+    sleep 45m
 done
