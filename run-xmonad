@@ -1,9 +1,9 @@
-#!/bin/bash
+#!/bin/env sh
 
 setxkbmap es -option "ctrl:nocaps"
 xsetroot -cursor_name left_ptr
 xset r rate 200 50 &
-xcompmgr -c &
+xcompmgr -c -n &
 xsetroot -solid black
 trayer --edge top --align right --SetDockType true --SetPartialStrut true \
        --expand true --width 15 --transparent true --alpha 0 --tint 0x283339 --height 21 \
