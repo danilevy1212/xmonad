@@ -6,8 +6,6 @@ for pic in ~/Pictures/Wallpapers/*; do
     _PICTURES="$pic $_PICTURES"
 done
 
-echo "$_PICTURES" >> /home/dlevy/TEST_DEBUG
-
 while true; do
     echo "$_PICTURES" | xargs feh --bg-scale --no-fehbg -z
     sleep 45m
