@@ -57,6 +57,7 @@ myKeys =
   [
     ((mod4Mask, xK_f), spawn "emacs")
   , ((mod4Mask, xK_m), spawn "firefox")
+  , ((mod4Mask, xK_g), spawn "gvim")
   , ((mod4Mask .|. shiftMask, xK_m), spawn "firefox -private-window")
   , ((mod4Mask .|. shiftMask, xK_s), spawn "spotify")
   , ((mod4Mask, xK_p), spawn "dmenu_run -l 10 -i")
@@ -95,7 +96,7 @@ myTabConfig = def
   , activeTextColor = "#80FFF9"
   , inactiveTextColor = "#1ABC9C"
   , urgentTextColor = "#1ABC9C"
-  , fontName = "xft:Noto Sans CJK:size=10:antialias=true"
+  , fontName = "xft:Ubuntu Mono:size=10:antialias=true"
   }
 
 myLayoutHook =
