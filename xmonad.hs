@@ -1,26 +1,26 @@
-import XMonad
-import XMonad.Config.Desktop
-import XMonad.Layout.IndependentScreens
+import           Control.Applicative
+import           System.Exit (exitWith, ExitCode(..))
+import           System.IO
+import           XMonad
+import           XMonad.Actions.CycleWS
+import           XMonad.Actions.GroupNavigation
+import           XMonad.Config.Desktop
+import           XMonad.Hooks.DynamicLog
+import           XMonad.Hooks.EwmhDesktops
+import           XMonad.Hooks.ManageDocks
+import           XMonad.Hooks.SetWMName
+import           XMonad.Layout.GridVariants
+import           XMonad.Layout.IndependentScreens
+import           XMonad.Layout.NoBorders (smartBorders, noBorders)
+import           XMonad.Layout.ResizableTile
+import           XMonad.Layout.SimpleDecoration (shrinkText)
+import           XMonad.Layout.Spacing
+import           XMonad.Layout.Tabbed
+import           XMonad.Layout.TwoPane
 import qualified XMonad.StackSet as W
-import XMonad.Actions.CycleWS
-import Control.Applicative
-import XMonad.Hooks.ManageDocks
-import XMonad.Util.EZConfig (additionalKeys, removeKeys)
-import XMonad.Layout.ResizableTile
-import XMonad.Layout.NoBorders(smartBorders, noBorders)
-import XMonad.Layout.Spacing
-import XMonad.Layout.Tabbed
-import XMonad.Layout.TwoPane
-import XMonad.Layout.GridVariants
-import XMonad.Layout.SimpleDecoration (shrinkText)
-import XMonad.Util.Replace
-import System.IO
-import XMonad.Hooks.SetWMName
-import XMonad.Util.Run(spawnPipe)
-import XMonad.Hooks.DynamicLog
-import XMonad.Hooks.EwmhDesktops
-import XMonad.Actions.GroupNavigation
-import System.Exit (exitWith, ExitCode(..))
+import           XMonad.Util.EZConfig (additionalKeys, removeKeys)
+import           XMonad.Util.Replace
+import           XMonad.Util.Run (spawnPipe)
 
 myKeys =
   [
