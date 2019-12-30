@@ -1,4 +1,4 @@
-#!/bin/env sh
+#!/bin/sh
 
 setxkbmap es -option "ctrl:nocaps"
 xsetroot -cursor_name left_ptr
