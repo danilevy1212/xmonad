@@ -1,25 +1,25 @@
-import           Control.Applicative
+import           Control.Applicative()
 import           System.Exit (exitWith, ExitCode(..))
 import           System.IO
 import           XMonad
-import           XMonad.Actions.CycleWS
+import           XMonad.Actions.CycleWS()
 import           XMonad.Actions.GroupNavigation
-import           XMonad.Config.Desktop
+import           XMonad.Config.Desktop()
 import           XMonad.Hooks.DynamicLog
 import           XMonad.Hooks.EwmhDesktops
 import           XMonad.Hooks.ManageDocks
 import           XMonad.Hooks.SetWMName
 import           XMonad.Layout.GridVariants
-import           XMonad.Layout.IndependentScreens
+import           XMonad.Layout.IndependentScreens()
 import           XMonad.Layout.NoBorders (smartBorders, noBorders)
-import           XMonad.Layout.ResizableTile
+import           XMonad.Layout.ResizableTile()
 import           XMonad.Layout.SimpleDecoration (shrinkText)
 import           XMonad.Layout.Spacing
 import           XMonad.Layout.Tabbed
 import           XMonad.Layout.TwoPane
 import qualified XMonad.StackSet as W
 import           XMonad.Util.EZConfig (additionalKeys, removeKeys)
-import           XMonad.Util.Replace
+import           XMonad.Util.Replace()
 import           XMonad.Util.Run (spawnPipe)
 
 myKeys =
@@ -78,7 +78,6 @@ myKeys =
   , ((mod4Mask .|. shiftMask .|. controlMask, xK_z), spawn "xscreensaver-command -suspend")
   ]
 
-
 keysToRemove =
   [
     (mod4Mask .|. shiftMask, xK_c)
@@ -86,6 +85,7 @@ keysToRemove =
   , (mod4Mask, xK_q)
   ]
 
+myTabConfig :: Theme
 myTabConfig = def
   { activeColor = "#556064"
   , inactiveColor = "#2F3D44"
@@ -100,10 +100,8 @@ myTabConfig = def
   }
 
 myLayoutHook =
-  -- (smartBorders $ spacingRaw True (Border 0 10 10 10) True (Border 10 10 10 10) True $ Grid (16/9)) |||
-  (smartBorders $ smartSpacingWithEdge 4 $ ResizableTall 1 (3/100) (1/2) []) |||
-  (smartBorders $ smartSpacingWithEdge 4 $ Mirror (ResizableTall 1 (3/100) (1/2) [])) |||
-  -- (smartBorders $ spacingRaw True (Border 0 10 10 10) True (Border 10 10 10 10) True $ TwoPane (3/100) (1/2)) |||
+  (smartBorders $ spacingRaw True (Border 0 10 10 10) True (Border 10 10 10 10) True $ Grid (16/9)) |||
+  (smartBorders $ spacingRaw True (Border 0 10 10 10) True (Border 10 10 10 10) True $ TwoPane (3/100) (1/2)) |||
   (noBorders $ tabbed shrinkText myTabConfig)
 
 conf = def
@@ -121,6 +119,7 @@ conf = def
   `removeKeys` keysToRemove
   `additionalKeys` myKeys
 
+main :: IO ()
 main = do
   xmproc <- spawnPipe "xmobar ~/.xmonad/xmobarrc.hs"
   xmonad $ ewmh conf
