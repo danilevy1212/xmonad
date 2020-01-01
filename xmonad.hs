@@ -21,6 +21,7 @@ import qualified XMonad.StackSet as W
 import           XMonad.Util.EZConfig (additionalKeys, removeKeys)
 import           XMonad.Util.Replace()
 import           XMonad.Util.Run (spawnPipe)
+import           Graphics.X11.ExtraTypes.XF86
 
 myKeys =
   [
@@ -77,6 +78,17 @@ myKeys =
   -- Lock screen turning off monitor
   , ((mod4Mask .|. shiftMask .|. controlMask, xK_z), spawn "xscreensaver-command -suspend")
   ]
+  ++
+  -- media keys
+  [
+     ((0, xF86XK_AudioPlay)       , spawn "playerctl play-pause")
+   , ((0, xF86XK_AudioStop)       , spawn "playerctl stop")
+   , ((0, xF86XK_AudioNext)       , spawn "playerctl next")
+   , ((0, xF86XK_AudioPrev)       , spawn "playerctl previous")
+   , ((0, xF86XK_AudioLowerVolume), spawn "pactl set-sink-volume 0 -5%")
+   , ((0, xF86XK_AudioRaiseVolume), spawn "pactl set-sink-volume 0 +5%")
+   , ((0, xF86XK_AudioMute)       , spawn "pactl set-sink-mute 0 toggle")
+   ]
 
 keysToRemove =
   [
