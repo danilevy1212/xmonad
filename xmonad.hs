@@ -19,6 +19,18 @@ import qualified DBus as D
 import qualified DBus.Client as D
 import qualified Codec.Binary.UTF8.String as UTF8
 
+black :: String
+black = "#282c34"
+
+red   :: String
+red   = "#be5046"
+
+cyan  :: String
+cyan  = "#56b6c2"
+
+yellow :: String
+yellow = "#e5c07b"
+
 myKeys =
   [
     -- Swap screen order
@@ -77,14 +89,14 @@ myKeys =
   ++
   -- media keys
   [
-     ((0, xF86XK_AudioPlay)        , spawn "playerctl play-pause")
-   , ((0, xF86XK_AudioStop)        , spawn "playerctl stop")
-   , ((0, xF86XK_AudioNext)        , spawn "playerctl next")
-   , ((0, xF86XK_AudioPrev)        , spawn "playerctl previous")
-   , ((0, xF86XK_AudioLowerVolume) , spawn "pactl set-sink-volume 0 -5%")
-   , ((0, xF86XK_AudioRaiseVolume) , spawn "pactl set-sink-volume 0 +5%")
-   , ((0, xF86XK_AudioMute)        , spawn "pactl set-sink-mute 0 toggle")
-   ]
+    ((0, xF86XK_AudioPlay)        , spawn "playerctl play-pause")
+  , ((0, xF86XK_AudioStop)        , spawn "playerctl stop")
+  , ((0, xF86XK_AudioNext)        , spawn "playerctl next")
+  , ((0, xF86XK_AudioPrev)        , spawn "playerctl previous")
+  , ((0, xF86XK_AudioLowerVolume) , spawn "pactl set-sink-volume 0 -5%")
+  , ((0, xF86XK_AudioRaiseVolume) , spawn "pactl set-sink-volume 0 +5%")
+  , ((0, xF86XK_AudioMute)        , spawn "pactl set-sink-mute 0 toggle")
+  ]
 
 keysToRemove =
   [
@@ -95,17 +107,18 @@ keysToRemove =
 
 myTabConfig :: Theme
 myTabConfig = def
-  { activeColor = "#556064"
-  , inactiveColor = "#2F3D44"
-  , urgentColor = "#FDF6E3"
-  , activeBorderColor = "#454948"
-  , inactiveBorderColor = "#454948"
-  , urgentBorderColor = "#268BD2"
-  , activeTextColor = "#80FFF9"
-  , inactiveTextColor = "#1ABC9C"
-  , urgentTextColor = "#1ABC9C"
-  , fontName = "xft:Ubuntu Mono:size=10:antialias=true"
-  }
+              {
+                activeColor = "#556064"
+              , inactiveColor = "#2F3D44"
+              , urgentColor = "#FDF6E3"
+              , activeBorderColor = "#454948"
+              , inactiveBorderColor = "#454948"
+              , urgentBorderColor = "#268BD2"
+              , activeTextColor = "#80FFF9"
+              , inactiveTextColor = "#1ABC9C"
+              , urgentTextColor = "#1ABC9C"
+              , fontName = "xft:Ubuntu Mono:size=13:antialias=true"
+              }
 
 myLayoutHook =
   smartBorders $ myGrid ||| myTwoPane ||| myTabbedLayout
@@ -117,40 +130,42 @@ myLayoutHook =
     myTabbedLayout = tabbed shrinkText myTabConfig
 
 conf = def
-  { modMask            = mod4Mask
-  , terminal           = "termite"
-  , borderWidth        = 3
-  , startupHook        = setWMName "LG3D"
-  , focusedBorderColor = "#cccccc"
-  , normalBorderColor  = "#000000"
-  , focusFollowsMouse  = False
-  , clickJustFocuses   = False
-  , manageHook         = manageDocks <+> manageHook def
-  , handleEventHook    = handleEventHook def <+> docksEventHook <+> fullscreenEventHook
-  , layoutHook         = avoidStruts $ myLayoutHook
-  }
-  `removeKeys` keysToRemove
-  `additionalKeys` myKeys
+       { modMask            = mod4Mask
+       , terminal           = "termite"
+       , borderWidth        = 3
+       , startupHook        = setWMName "LG3D"
+       , focusedBorderColor = cyan
+       , normalBorderColor  = black
+       , focusFollowsMouse  = False
+       , clickJustFocuses   = False
+       , manageHook         = manageDocks <+> manageHook def
+       , handleEventHook    = handleEventHook def <+> docksEventHook <+> fullscreenEventHook
+       , layoutHook         = avoidStruts $ myLayoutHook
+       }
+       `removeKeys` keysToRemove
+       `additionalKeys` myKeys
 
 myLogHook :: D.Client -> PP
 myLogHook dbus = def
-    { ppOutput = dbusOutput dbus
-    , ppCurrent = wrap ("%{B" ++ "#504945"++ "} ") " %{B-}"
-    , ppVisible = wrap ("%{B" ++ "#3c3836" ++ "} ") " %{B-}"
-    , ppUrgent = wrap ("%{F" ++ "#fb4934" ++ "} ") " %{F-}"
-    , ppHidden = wrap " " " "
-    , ppWsSep = ""
-    , ppSep = "    "
-    , ppTitle = \s -> s
-    }
+                 { ppOutput = dbusOutput dbus
+                 , ppCurrent = wrap ("%{B" ++ cyan ++ "} ") " %{B-}"
+                 , ppVisible = wrap ("%{B" ++ black ++ "} ") " %{B-}"
+                 , ppUrgent = wrap  ("%{F" ++ red ++ "} ") " %{F-}"
+                 , ppHidden = wrap " " " "
+                 , ppLayout = \_ -> ""
+                 , ppWsSep = ""
+                 , ppSep = "    "
+                 , ppTitle = wrap ("%{F" ++ yellow ++ "} ") "%{F-}". shorten 30
+                 }
 
 -- Emit a DBus signal on log updates
 dbusOutput :: D.Client -> String -> IO ()
 dbusOutput dbus str = do
-    let signal = (D.signal objectPath interfaceName memberName) {
-            D.signalBody = [D.toVariant $ UTF8.decodeString str]
+  let signal = (D.signal objectPath interfaceName memberName)
+        {
+          D.signalBody = [D.toVariant $ UTF8.decodeString str]
         }
-    D.emit dbus signal
+  D.emit dbus signal
   where
     objectPath = D.objectPath_ "/org/xmonad/Log"
     interfaceName = D.interfaceName_ "org.xmonad.Log"

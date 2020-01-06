@@ -1,3 +1,15 @@
+[colors]
+bg      = #aa282c34
+black   = #282c34
+red     = #e06c75
+green   = #98c379
+yellow  = #e5c07b
+blue    = #61afef
+magenta = #c678dd
+cyan    = #56b6c2
+white   = #abb2bf
+darkness = #000
+
 [bar/topbar]
 modules-right = date
 modules-left = xmonad
@@ -8,6 +20,8 @@ font-2 = "Ubuntu Mono:size=13:style=Bold;3"
 font-3 = "Noto Sans CJK JP:size=13:style=Bold;3"
 font-4 = "Ubuntu Mono:size=13:style=Italic;3"
 font-5 = "Noto Sans CJK JP:size=13:style=Italic;3"
+background = ${colors.bg}
+padding-right = 1
 
 [module/date]
 type = internal/date
@@ -15,7 +29,7 @@ date = %Y-%m-%d%
 time = %H:%M:%S
 label = %date% %time%
 label-font = 3
-label-foreground = #9A32DB
+label-foreground = ${colors.blue}
 
 [module/xmonad]
 type = custom/script
