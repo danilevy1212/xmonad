@@ -1,33 +1,29 @@
 import           Control.Applicative()
 import           System.Exit (exitWith, ExitCode(..))
-import           System.IO
 import           XMonad
-import           XMonad.Actions.CycleWS()
-import           XMonad.Actions.GroupNavigation
-import           XMonad.Config.Desktop()
-import           XMonad.Hooks.DynamicLog
 import           XMonad.Hooks.EwmhDesktops
 import           XMonad.Hooks.ManageDocks
 import           XMonad.Hooks.SetWMName
+import           XMonad.Hooks.DynamicLog
 import           XMonad.Layout.GridVariants
-import           XMonad.Layout.IndependentScreens()
-import           XMonad.Layout.NoBorders (smartBorders, noBorders)
-import           XMonad.Layout.ResizableTile()
+import           XMonad.Layout.NoBorders (smartBorders)
 import           XMonad.Layout.SimpleDecoration (shrinkText)
 import           XMonad.Layout.Spacing
 import           XMonad.Layout.Tabbed
 import           XMonad.Layout.TwoPane
 import qualified XMonad.StackSet as W
 import           XMonad.Util.EZConfig (additionalKeys, removeKeys)
-import           XMonad.Util.Replace()
-import           XMonad.Util.Run (spawnPipe)
 import           Graphics.X11.ExtraTypes.XF86
+
+import qualified DBus as D
+import qualified DBus.Client as D
+import qualified Codec.Binary.UTF8.String as UTF8
 
 myKeys =
   [
     -- Swap screen order
-    ((m .|. mod4Mask, key), screenWorkspace sc >>= flip whenJust (windows . f)) | (key, sc) <- zip [xK_q, xK_w, xK_e] [0..2]
-    , (f, m) <- [(W.view, 0), (W.shift, shiftMask)]
+    ((m .|. mod4Mask, key), screenWorkspace sc >>= flip whenJust (windows . f)) |
+    (key, sc) <- zip [xK_q, xK_w, xK_e] [0..2] , (f, m) <- [(W.view, 0), (W.shift, shiftMask)]
   ]
   ++
   -- Navigation
@@ -81,13 +77,13 @@ myKeys =
   ++
   -- media keys
   [
-     ((0, xF86XK_AudioPlay)       , spawn "playerctl play-pause")
-   , ((0, xF86XK_AudioStop)       , spawn "playerctl stop")
-   , ((0, xF86XK_AudioNext)       , spawn "playerctl next")
-   , ((0, xF86XK_AudioPrev)       , spawn "playerctl previous")
-   , ((0, xF86XK_AudioLowerVolume), spawn "pactl set-sink-volume 0 -5%")
-   , ((0, xF86XK_AudioRaiseVolume), spawn "pactl set-sink-volume 0 +5%")
-   , ((0, xF86XK_AudioMute)       , spawn "pactl set-sink-mute 0 toggle")
+     ((0, xF86XK_AudioPlay)        , spawn "playerctl play-pause")
+   , ((0, xF86XK_AudioStop)        , spawn "playerctl stop")
+   , ((0, xF86XK_AudioNext)        , spawn "playerctl next")
+   , ((0, xF86XK_AudioPrev)        , spawn "playerctl previous")
+   , ((0, xF86XK_AudioLowerVolume) , spawn "pactl set-sink-volume 0 -5%")
+   , ((0, xF86XK_AudioRaiseVolume) , spawn "pactl set-sink-volume 0 +5%")
+   , ((0, xF86XK_AudioMute)        , spawn "pactl set-sink-mute 0 toggle")
    ]
 
 keysToRemove =
@@ -112,9 +108,13 @@ myTabConfig = def
   }
 
 myLayoutHook =
-  (smartBorders $ spacingRaw True (Border 0 10 10 10) True (Border 10 10 10 10) True $ Grid (16/9)) |||
-  (smartBorders $ spacingRaw True (Border 0 10 10 10) True (Border 10 10 10 10) True $ TwoPane (3/100) (1/2)) |||
-  (noBorders $ tabbed shrinkText myTabConfig)
+  smartBorders $ myGrid ||| myTwoPane ||| myTabbedLayout
+  where
+    myBorder = Border 10 10 10 10
+    mySpacing = spacingRaw True myBorder True myBorder True
+    myGrid = mySpacing $ Grid (16/9)
+    myTwoPane = mySpacing $ TwoPane (3/100) (1/2)
+    myTabbedLayout = tabbed shrinkText myTabConfig
 
 conf = def
   { modMask            = mod4Mask
@@ -124,6 +124,7 @@ conf = def
   , focusedBorderColor = "#cccccc"
   , normalBorderColor  = "#000000"
   , focusFollowsMouse  = False
+  , clickJustFocuses   = False
   , manageHook         = manageDocks <+> manageHook def
   , handleEventHook    = handleEventHook def <+> docksEventHook <+> fullscreenEventHook
   , layoutHook         = avoidStruts $ myLayoutHook
@@ -131,13 +132,39 @@ conf = def
   `removeKeys` keysToRemove
   `additionalKeys` myKeys
 
+myLogHook :: D.Client -> PP
+myLogHook dbus = def
+    { ppOutput = dbusOutput dbus
+    , ppCurrent = wrap ("%{B" ++ "#504945"++ "} ") " %{B-}"
+    , ppVisible = wrap ("%{B" ++ "#3c3836" ++ "} ") " %{B-}"
+    , ppUrgent = wrap ("%{F" ++ "#fb4934" ++ "} ") " %{F-}"
+    , ppHidden = wrap " " " "
+    , ppWsSep = ""
+    , ppSep = "    "
+    , ppTitle = \s -> s
+    }
+
+-- Emit a DBus signal on log updates
+dbusOutput :: D.Client -> String -> IO ()
+dbusOutput dbus str = do
+    let signal = (D.signal objectPath interfaceName memberName) {
+            D.signalBody = [D.toVariant $ UTF8.decodeString str]
+        }
+    D.emit dbus signal
+  where
+    objectPath = D.objectPath_ "/org/xmonad/Log"
+    interfaceName = D.interfaceName_ "org.xmonad.Log"
+    memberName = D.memberName_ "Update"
+
 main :: IO ()
 main = do
-  xmproc <- spawnPipe "xmobar ~/.xmonad/xmobarrc.hs"
+  spawn "run-polybar" -- ln run-polybar .local/bin/
+  dbus <- D.connectSession
+  _ <- D.requestName dbus
+       (D.busName_ "org.xmonad.Log")
+       [D.nameAllowReplacement, D.nameReplaceExisting, D.nameDoNotQueue]
+
   xmonad $ ewmh conf
     {
-      logHook = dynamicLogWithPP xmobarPP
-      { ppOutput = hPutStrLn xmproc
-      , ppTitle  = xmobarColor "green" "" . shorten 50
-      } >> historyHook
+      logHook = dynamicLogWithPP (myLogHook dbus)
     }
