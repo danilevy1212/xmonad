@@ -14,7 +14,7 @@ nm-applet &
 dropbox start &
 pactl load-module module-bluetooth-discover &
 blueman-applet &
-pa-applet &
+# pa-applet &
 cbatticon &
 xscreensaver -no-splash &
 ibus-daemon -drx --panel /usr/lib/ibus/ibus-ui-gtk3
