@@ -29,7 +29,6 @@ resolver: lts-14.19
 #   - auto-update
 #   - wai
 packages:
-  - xmobar
   - xmonad
   - xmonad-contrib
 # Dependency packages to be pulled from upstream that are not in the resolver.
@@ -38,12 +37,10 @@ packages:
 
 extra-deps:
   - iwlib-0.1.0
+  - dbus-1.2.7
 
 # Override default flag values for local packages and extra-deps
-flags:
-  xmobar:
-    all_extensions: true
-
+# flags:
 
 # Extra package databases containing global packages
 # extra-package-dbs: []
