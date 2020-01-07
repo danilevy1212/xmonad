@@ -31,6 +31,12 @@ cyan  = "#56b6c2"
 yellow :: String
 yellow = "#e5c07b"
 
+-- magenta :: String
+-- magenta = "#9a52af"
+
+blue :: String
+blue = "#3b84c0"
+
 myKeys =
   [
     -- Swap screen order
@@ -148,12 +154,12 @@ myLogHook :: D.Client -> PP
 myLogHook dbus = def
                  { ppOutput = dbusOutput dbus
                  , ppCurrent = wrap ("%{B" ++ cyan ++ "} ") " %{B-}"
-                 , ppVisible = wrap ("%{B" ++ black ++ "} ") " %{B-}"
+                 , ppVisible = wrap ("%{B" ++ blue ++ "} ") " %{B-}"
                  , ppUrgent = wrap  ("%{F" ++ red ++ "} ") " %{F-}"
-                 , ppHidden = wrap " " " "
+                 , ppHidden = wrap  ("%{B" ++ black ++ "} ") " %{B-}"
                  , ppLayout = \_ -> ""
                  , ppWsSep = ""
-                 , ppSep = "    "
+                 , ppSep = "  "
                  , ppTitle = wrap ("%{F" ++ yellow ++ "} ") "%{F-}". shorten 30
                  }
 

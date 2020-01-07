@@ -11,14 +11,15 @@ white            = #abb2bf
 darkness         = #000
 
 [bar/topbar]
-modules-right    = date filesystem pulseaudio
-modules-left     = xmonad
+modules-right    = memory filesystem pulseaudio
+modules-center   = date
+modules-left     = xmonad cpu
 tray-position    = right
-font-0           = "Ubuntu Mono:size=13:style=Regular;3"
+font-0           = "Ubuntu Mono:size=11:style=Regular;3"
 font-1           = "Noto Sans CJK JP:size=13:style=Regular;3"
-font-2           = "Ubuntu Mono:size=13:style=Bold;3"
+font-2           = "Ubuntu Mono:size=11:style=Bold;3"
 font-3           = "Noto Sans CJK JP:size=13:style=Bold;3"
-font-4           = "Ubuntu Mono:size=13:style=Italic;3"
+font-4           = "Ubuntu Mono:size=11:style=Italic;3"
 font-5           = "Noto Sans CJK JP:size=13:style=Italic;3"
 font-6           = "Noto Color Emoji:scale=10:style=Regular"
 background       = ${colors.bg}
@@ -26,8 +27,10 @@ padding-right    = 1
 
 [module/date]
 type             = internal/date
-date             = %Y-%m-%d%
-time             = %H:%M:%S
+date             = ""
+date-alt         = %Y-%m-%d%
+time             = %H:%M
+time-alt         = %H:%M:%S
 label            = %date% %time%
 label-font       = 3
 label-foreground = ${colors.blue}
@@ -47,11 +50,49 @@ label-mounted    = "  💽:%used% of %total%  "
 [module/pulseaudio]
 type = internal/pulseaudio
 use-ui-max = true
-format-volume = <ramp-volume> <label-volume>
+format-volume = <ramp-volume>:<label-volume>
 interval = 5
-label-muted = 🔇 muted
+label-muted = 🔇:%percentage%%
 label-muted-foreground = ${colors.red}
 ramp-volume-0 = 🔈
 ramp-volume-1 = 🔉
 ramp-volume-2 = 🔊
 click-right = pavucontrol &
+
+[module/cpu]
+type = internal/cpu
+interval = 0.5
+format = <label> <ramp-coreload>
+label = "  CPU:%percentage%%"
+ramp-coreload-spacing = 0
+ramp-coreload-0 = ▁
+ramp-coreload-1 = ▂
+ramp-coreload-2 = ▃
+ramp-coreload-3 = ▄
+ramp-coreload-4 = ▅
+ramp-coreload-5 = ▆
+ramp-coreload-6 = ▇
+ramp-coreload-7 = █
+
+[module/memory]
+type = internal/memory
+interval = 1
+label = RAM:%gb_used%
+format = <label> <ramp-used>
+bar-used-indicator =
+bar-used-width = 50
+bar-used-foreground-0 = #55aa55
+bar-used-foreground-1 = #557755
+bar-used-foreground-2 = #f5a70a
+bar-used-foreground-3 = #ff5555
+bar-used-fill = ▐
+bar-used-empty = ▐
+bar-used-empty-foreground = #444444
+ramp-used-0 = ▁
+ramp-used-1 = ▂
+ramp-used-2 = ▃
+ramp-used-3 = ▄
+ramp-used-4 = ▅
+ramp-used-5 = ▆
+ramp-used-6 = ▇
+ramp-used-7 = █
