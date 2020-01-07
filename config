@@ -11,7 +11,7 @@ white            = #abb2bf
 darkness         = #000
 
 [bar/topbar]
-modules-right    = memory filesystem pulseaudio
+modules-right    = memory filesystem pulseaudio menu-apps
 modules-center   = date
 modules-left     = xmonad cpu
 tray-position    = right
@@ -96,3 +96,20 @@ ramp-used-4 = ▅
 ramp-used-5 = ▆
 ramp-used-6 = ▇
 ramp-used-7 = █
+
+[module/menu-apps]
+type = custom/menu
+format-spacing = 1
+label-open = " 🔐"
+label-open-foreground = ${colors.cyan}
+label-close = " ↩"
+label-close-foreground = ${colors.cyan}
+label-separator = |
+label-separator-foreground = ${colors.green}
+
+menu-0-0 = reboot
+menu-0-0-exec = shutdown now
+menu-0-1 = power off
+menu-0-1-exec = reboot
+menu-0-2 = lock
+menu-0-2-exec = xscreensaver-command -lock
