@@ -13,7 +13,7 @@ darkness                   = #000
 [bar/topbar]
 modules-right              = memory filesystem pulseaudio menu-apps
 modules-center             = date
-modules-left               = xmonad cpu wired-network wireless
+modules-left               = xmonad cpu wired-network wireless-network
 tray-position              = right
 font-0                     = "Ubuntu Mono:size      =11:style=Regular;3"
 font-1                     = "Noto Sans CJK JP:size =13:style=Regular;3"
@@ -27,7 +27,7 @@ padding-right              = 1
 
 [module/date]
 type                       = internal/date
-date                       = ""
+date                       =
 date-alt                   = %Y-%m-%d%
 time                       = %H:%M
 time-alt                   = %H:%M:%S
@@ -117,7 +117,7 @@ menu-0-2-exec              = xscreensaver-command -lock
 
 [module/wireless-network]
 type                       = internal/network
-interface                  = wlan1
+interface                  = wlp59s0
 
 label-connected            = "   %essid% %{F#c678dd}⬆%upspeed%%{F-} %{F#98c379}⬇%downspeed%%{F-}  "
 
