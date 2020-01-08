@@ -9,6 +9,7 @@ import           XMonad.Layout.GridVariants
 import           XMonad.Layout.NoBorders (smartBorders)
 import           XMonad.Layout.SimpleDecoration (shrinkText)
 import           XMonad.Layout.Spacing
+import           XMonad.Layout.NoBorders
 import           XMonad.Layout.Tabbed
 import           XMonad.Layout.TwoPane
 import qualified XMonad.StackSet as W
@@ -36,6 +37,9 @@ yellow = "#e5c07b"
 
 blue :: String
 blue = "#3b84c0"
+
+white :: String
+white = "#ffffff"
 
 myKeys =
   [
@@ -113,15 +117,15 @@ keysToRemove =
 myTabConfig :: Theme
 myTabConfig = def
               {
-                activeColor         = "#556064"
-              , inactiveColor       = "#2F3D44"
-              , urgentColor         = "#FDF6E3"
-              , activeBorderColor   = "#454948"
-              , inactiveBorderColor = "#454948"
-              , urgentBorderColor   = "#268BD2"
-              , activeTextColor     = "#80FFF9"
-              , inactiveTextColor   = "#1ABC9C"
-              , urgentTextColor     = "#1ABC9C"
+                activeColor         = cyan
+              , inactiveColor       = black
+              , urgentColor         = red
+              , activeBorderColor   = cyan
+              , inactiveBorderColor = blue
+              , urgentBorderColor   = red
+              , activeTextColor     = white
+              , inactiveTextColor   = white
+              , urgentTextColor     = white
               , fontName            = "xft:Ubuntu Mono:size=13:antialias=true"
               }
 
@@ -132,7 +136,7 @@ myLayoutHook =
     mySpacing      = spacingRaw True myBorder True myBorder True
     myGrid         = mySpacing $ Grid (16/9)
     myTwoPane      = mySpacing $ TwoPane (3/100) (1/2)
-    myTabbedLayout = tabbed shrinkText myTabConfig
+    myTabbedLayout = noBorders $ tabbed shrinkText myTabConfig
 
 conf = def
        { modMask            = mod4Mask
@@ -160,7 +164,7 @@ myLogHook dbus = def
                  , ppLayout  = \_ -> ""
                  , ppWsSep   = ""
                  , ppSep     = "  "
-                 , ppTitle   = wrap ("%{F" ++ yellow ++ "} ") "%{F-}". shorten 30
+                 , ppTitle   = wrap ("%{F" ++ yellow ++ "} ") "%{F-}". shorten 20
                  }
 
 -- Emit a DBus signal on log updates

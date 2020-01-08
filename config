@@ -1,115 +1,128 @@
 [colors]
-bg               = #aa282c34
-black            = #282c34
-red              = #e06c75
-green            = #98c379
-yellow           = #e5c07b
-blue             = #61afef
-magenta          = #c678dd
-cyan             = #56b6c2
-white            = #abb2bf
-darkness         = #000
+bg                         = #aa282c34
+black                      = #282c34
+red                        = #e06c75
+green                      = #98c379
+yellow                     = #e5c07b
+blue                       = #61afef
+magenta                    = #c678dd
+cyan                       = #56b6c2
+white                      = #abb2bf
+darkness                   = #000
 
 [bar/topbar]
-modules-right    = memory filesystem pulseaudio menu-apps
-modules-center   = date
-modules-left     = xmonad cpu
-tray-position    = right
-font-0           = "Ubuntu Mono:size=11:style=Regular;3"
-font-1           = "Noto Sans CJK JP:size=13:style=Regular;3"
-font-2           = "Ubuntu Mono:size=11:style=Bold;3"
-font-3           = "Noto Sans CJK JP:size=13:style=Bold;3"
-font-4           = "Ubuntu Mono:size=11:style=Italic;3"
-font-5           = "Noto Sans CJK JP:size=13:style=Italic;3"
-font-6           = "Noto Color Emoji:scale=10:style=Regular"
-background       = ${colors.bg}
-padding-right    = 1
+modules-right              = memory filesystem pulseaudio menu-apps
+modules-center             = date
+modules-left               = xmonad cpu wired-network wireless
+tray-position              = right
+font-0                     = "Ubuntu Mono:size      =11:style=Regular;3"
+font-1                     = "Noto Sans CJK JP:size =13:style=Regular;3"
+font-2                     = "Ubuntu Mono:size      =11:style=Bold;3"
+font-3                     = "Noto Sans CJK JP:size =13:style=Bold;3"
+font-4                     = "Ubuntu Mono:size      =11:style=Italic;3"
+font-5                     = "Noto Sans CJK JP:size =13:style=Italic;3"
+font-6                     = "Noto Color Emoji:scale=10:style=Regular"
+background                 = ${colors.bg}
+padding-right              = 1
 
 [module/date]
-type             = internal/date
-date             = ""
-date-alt         = %Y-%m-%d%
-time             = %H:%M
-time-alt         = %H:%M:%S
-label            = %date% %time%
-label-font       = 3
-label-foreground = ${colors.blue}
+type                       = internal/date
+date                       = ""
+date-alt                   = %Y-%m-%d%
+time                       = %H:%M
+time-alt                   = %H:%M:%S
+label                      = %date% %time%
+label-font                 = 3
+label-foreground           = ${colors.blue}
 
 [module/xmonad]
-type             = custom/script
-exec             = xmonad-log
-tail             = true
+type                       = custom/script
+exec                       = xmonad-log
+tail                       = true
 
 [module/filesystem]
-type             = internal/fs
-mount-0          = /
-interval         = 2
-fixed-values     = true
-label-mounted    = "  💽:%used% of %total%  "
+type                       = internal/fs
+mount-0                    = /
+interval                   = 2
+fixed-values               = true
+label-mounted              = "  💽:%used% of %total%  "
 
 [module/pulseaudio]
-type = internal/pulseaudio
-use-ui-max = true
-format-volume = <ramp-volume>:<label-volume>
-interval = 5
-label-muted = 🔇:%percentage%%
-label-muted-foreground = ${colors.red}
-ramp-volume-0 = 🔈
-ramp-volume-1 = 🔉
-ramp-volume-2 = 🔊
-click-right = pavucontrol &
+type                       = internal/pulseaudio
+use-ui-max                 = true
+format-volume              = <ramp-volume>:<label-volume>
+interval                   = 5
+label-muted                = 🔇:%percentage%%
+label-muted-foreground     = ${colors.red}
+ramp-volume-0              = 🔈
+ramp-volume-1              = 🔉
+ramp-volume-2              = 🔊
+click-right                = pavucontrol &
 
 [module/cpu]
-type = internal/cpu
-interval = 0.5
-format = <label> <ramp-coreload>
-label = "  CPU:%percentage%%"
-ramp-coreload-spacing = 0
-ramp-coreload-0 = ▁
-ramp-coreload-1 = ▂
-ramp-coreload-2 = ▃
-ramp-coreload-3 = ▄
-ramp-coreload-4 = ▅
-ramp-coreload-5 = ▆
-ramp-coreload-6 = ▇
-ramp-coreload-7 = █
+type                       = internal/cpu
+interval                   = 0.5
+format                     = "  <label> <ramp-coreload>"
+label                      = "  CPU:%percentage%%"
+ramp-coreload-spacing      = 0
+ramp-coreload-0            = ▁
+ramp-coreload-1            = ▂
+ramp-coreload-2            = ▃
+ramp-coreload-3            = ▄
+ramp-coreload-4            = ▅
+ramp-coreload-5            = ▆
+ramp-coreload-6            = ▇
+ramp-coreload-7            = █
 
 [module/memory]
-type = internal/memory
-interval = 1
-label = RAM:%gb_used%
-format = <label> <ramp-used>
-bar-used-indicator =
-bar-used-width = 50
-bar-used-foreground-0 = #55aa55
-bar-used-foreground-1 = #557755
-bar-used-foreground-2 = #f5a70a
-bar-used-foreground-3 = #ff5555
-bar-used-fill = ▐
-bar-used-empty = ▐
-bar-used-empty-foreground = #444444
-ramp-used-0 = ▁
-ramp-used-1 = ▂
-ramp-used-2 = ▃
-ramp-used-3 = ▄
-ramp-used-4 = ▅
-ramp-used-5 = ▆
-ramp-used-6 = ▇
-ramp-used-7 = █
+type                       = internal/memory
+interval                   = 1
+label                      = RAM:%gb_used%
+format                     = <label> <ramp-used>
+bar-used-indicator         =
+bar-used-width             = 50
+bar-used-foreground-0      = #55aa55
+bar-used-foreground-1      = #557755
+bar-used-foreground-2      = #f5a70a
+bar-used-foreground-3      = #ff5555
+bar-used-fill              = ▐
+bar-used-empty             = ▐
+bar-used-empty-foreground  = #444444
+ramp-used-0                = ▁
+ramp-used-1                = ▂
+ramp-used-2                = ▃
+ramp-used-3                = ▄
+ramp-used-4                = ▅
+ramp-used-5                = ▆
+ramp-used-6                = ▇
+ramp-used-7                = █
 
 [module/menu-apps]
-type = custom/menu
-format-spacing = 1
-label-open = " 🔐"
-label-open-foreground = ${colors.cyan}
-label-close = " ↩"
-label-close-foreground = ${colors.cyan}
-label-separator = |
+type                       = custom/menu
+format-spacing             = 1
+label-open                 = "  🔐 "
+label-open-foreground      = ${colors.cyan}
+label-close                = "  ↩"
+label-close-foreground     = ${colors.cyan}
+label-separator            = |
 label-separator-foreground = ${colors.green}
 
-menu-0-0 = reboot
-menu-0-0-exec = shutdown now
-menu-0-1 = power off
-menu-0-1-exec = reboot
-menu-0-2 = lock
-menu-0-2-exec = xscreensaver-command -lock
+menu-0-0                   = reboot
+menu-0-0-exec              = reboot
+menu-0-1                   = power off
+menu-0-1-exec              = poweroff
+menu-0-2                   = lock
+menu-0-2-exec              = xscreensaver-command -lock
+
+
+[module/wireless-network]
+type                       = internal/network
+interface                  = wlan1
+
+label-connected            = "   %essid% %{F#c678dd}⬆%upspeed%%{F-} %{F#98c379}⬇%downspeed%%{F-}  "
+
+[module/wired-network]
+type                       = internal/network
+interface                  = eno1
+
+label-connected            = "   %ifname% %{F#c678dd}⬆%upspeed%%{F-} %{F#98c379}⬇%downspeed%%{F-}  "

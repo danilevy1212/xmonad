@@ -1,16 +1,16 @@
 #!/bin/sh
 
- [[ -f ~/.Xresources ]] && xrdb -merge -I$HOME ~/.Xresources
+[ -f ~/.Xresources ] && xrdb -merge -I ~/.Xresources
 
 setxkbmap es -option "ctrl:nocaps"
 xsetroot -cursor_name left_ptr
 xset r rate 200 50 &
 xcompmgr -c -n &
-xsetroot -solid black
+# xsetroot -solid black
 # trayer --edge top --align right --SetDockType true --SetPartialStrut true \
 #        --expand true --width 15 --transparent true --alpha 0 --tint 0x283339 --height 21 \
 #        --monitor 0 --iconspacing 4 &
-nm-applet &
+# nm-applet &
 dropbox start &
 pactl load-module module-bluetooth-discover &
 blueman-applet &
