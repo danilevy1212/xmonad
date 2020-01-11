@@ -11,7 +11,7 @@ white                      = #abb2bf
 darkness                   = #000
 
 [bar/topbar]
-modules-right              = memory filesystem pulseaudio menu-apps
+modules-right              = memory filesystem pulseaudio battery menu-apps
 modules-center             = date
 modules-left               = xmonad cpu wired-network wireless-network
 tray-position              = right
@@ -22,6 +22,7 @@ font-3                     = "Noto Sans CJK JP:size =13:style=Bold;3"
 font-4                     = "Ubuntu Mono:size      =11:style=Italic;3"
 font-5                     = "Noto Sans CJK JP:size =13:style=Italic;3"
 font-6                     = "Noto Color Emoji:scale=10:style=Regular"
+font-7                     = "FontAwesome:scale=10:style=Regular"
 background                 = ${colors.bg}
 padding-right              = 1
 
@@ -63,7 +64,7 @@ click-right                = pavucontrol &
 type                       = internal/cpu
 interval                   = 0.5
 format                     = "  <label> <ramp-coreload>"
-label                      = "  CPU:%percentage%%"
+label                      = "  %{F#61afef}%{F-}:%percentage%%"
 ramp-coreload-spacing      = 0
 ramp-coreload-0            = ▁
 ramp-coreload-1            = ▂
@@ -114,15 +115,40 @@ menu-0-1-exec              = poweroff
 menu-0-2                   = lock
 menu-0-2-exec              = xscreensaver-command -lock
 
-
 [module/wireless-network]
 type                       = internal/network
 interface                  = wlp59s0
-
-label-connected            = "   %essid% %{F#c678dd}⬆%upspeed%%{F-} %{F#98c379}⬇%downspeed%%{F-}  "
+label-connected            = "   %{F#e06c75} %essid%%{F-} %{F#c678dd}⬆%upspeed%%{F-} %{F#98c379}⬇%downspeed%%{F-}  "
 
 [module/wired-network]
 type                       = internal/network
 interface                  = eno1
+label-connected            = "   %{F#e06c75} %ifname%%{F-} %{F#c678dd}⬆%upspeed%%{F-} %{F#98c379}⬇%downspeed%%{F-}  "
 
-label-connected            = "   %ifname% %{F#c678dd}⬆%upspeed%%{F-} %{F#98c379}⬇%downspeed%%{F-}  "
+[module/battery]
+type = internal/battery
+battery = BAT0
+adapter = AC
+full-at = 99
+time-format = %H:%M
+
+format-charging = <animation-charging> <label-charging>
+format-discharging = <animation-discharging> <label-discharging>
+
+label-charging = %time%
+animation-charging-0 = "  %{F#e06c75}%{F-}"
+animation-charging-1 = "  %{F#e06c75}%{F-}"
+animation-charging-2 = "  %{F#e5c07b}%{F-}"
+animation-charging-3 = "  %{F#98c379}%{F-}"
+animation-charging-4 = "  %{F#98c379}%{F-}"
+animation-charging-framerate = 500
+
+label-discharging = %percentage%%
+animation-discharging-0 = "  %{F#98c379}%{F-}"
+animation-discharging-1 = "  %{F#98c379}%{F-}"
+animation-discharging-2 = "  %{F#e5c07b}%{F-}"
+animation-discharging-3 = "  %{F#e06c75}%{F-}"
+animation-discharging-4 = "  %{F#e06c75}%{F-}"
+animation-discharging-framerate = 500
+
+label-full ="  %{F#98c379}%{F-}"
