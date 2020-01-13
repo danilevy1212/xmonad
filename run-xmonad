@@ -2,7 +2,7 @@
 
 [ -f ~/.Xresources ] && xrdb -merge -I ~/.Xresources
 
-setxkbmap es -option "ctrl:nocaps"
+setxkbmap es -option "ctrl:swapcaps"
 xsetroot -cursor_name left_ptr
 xset r rate 200 50 &
 xcompmgr -c -n &
