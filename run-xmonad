@@ -10,11 +10,11 @@ nm-applet &
 dropbox start &
 pactl load-module module-bluetooth-discover &
 blueman-applet &
-udiskie -a -s --terminal="termite -d" &
+udiskie -a -s --terminal="termite" &
 
-if [-n "$WORK_STATION"]; then
+if [ -n "$WORK_STATION" ]; then
     gnome-screensaver &
-else 
+else
     xscreensaver -no-splash &
 fi
 
