@@ -1,20 +1,19 @@
-import           Control.Applicative()
+import           Control.Applicative ()
+import           Graphics.X11.ExtraTypes.XF86
 import           System.Exit (exitWith, ExitCode(..))
 import           XMonad
+import           XMonad.Hooks.DynamicLog
 import           XMonad.Hooks.EwmhDesktops
 import           XMonad.Hooks.ManageDocks
 import           XMonad.Hooks.SetWMName
-import           XMonad.Hooks.DynamicLog
 import           XMonad.Layout.GridVariants
-import           XMonad.Layout.NoBorders (smartBorders)
-import           XMonad.Layout.SimpleDecoration (shrinkText)
+import           XMonad.Layout.NoBorders (smartBorders, noBorders)
+import           XMonad.Layout.SimpleDecoration
 import           XMonad.Layout.Spacing
-import           XMonad.Layout.NoBorders
 import           XMonad.Layout.Tabbed
 import           XMonad.Layout.TwoPane
 import qualified XMonad.StackSet as W
 import           XMonad.Util.EZConfig (additionalKeys, removeKeys)
-import           Graphics.X11.ExtraTypes.XF86
 
 import qualified DBus as D
 import qualified DBus.Client as D
@@ -41,6 +40,7 @@ blue = "#3b84c0"
 white :: String
 white = "#ffffff"
 
+myKeys :: [((KeyMask, KeySym), X ())]
 myKeys =
   [
     -- Swap screen order
@@ -107,6 +107,7 @@ myKeys =
   , ((0, xF86XK_AudioMute)        , spawn "pulsemixer --toggle-mute")
   ]
 
+keysToRemove :: [(KeyMask, KeySym)]
 keysToRemove =
   [
     (mod4Mask .|. shiftMask, xK_c)
@@ -138,34 +139,21 @@ myLayoutHook =
     myTwoPane      = mySpacing $ TwoPane (3/100) (1/2)
     myTabbedLayout = noBorders $ tabbed shrinkText myTabConfig
 
-conf = def
-       { modMask            = mod4Mask
-       , terminal           = "termite"
-       , borderWidth        = 1
-       , startupHook        = setWMName "LG3D"
-       , focusedBorderColor = cyan
-       , normalBorderColor  = black
-       , focusFollowsMouse  = False
-       , clickJustFocuses   = False
-       , manageHook         = manageDocks <+> manageHook def
-       , handleEventHook    = handleEventHook def <+> docksEventHook <+> fullscreenEventHook
-       , layoutHook         = avoidStruts $ myLayoutHook
-       }
-       `removeKeys` keysToRemove
-       `additionalKeys` myKeys
-
-myLogHook :: D.Client -> PP
-myLogHook dbus = def
-                 { ppOutput  = dbusOutput dbus
-                 , ppCurrent = wrap ("%{B" ++ cyan ++ "} ") " %{B-}"
-                 , ppVisible = wrap ("%{B" ++ blue ++ "} ") " %{B-}"
-                 , ppUrgent  = wrap  ("%{F" ++ red ++ "} ") " %{F-}"
-                 , ppHidden  = wrap  ("%{B" ++ black ++ "} ") " %{B-}"
-                 , ppLayout  = \_ -> ""
-                 , ppWsSep   = ""
-                 , ppSep     = "  "
-                 , ppTitle   = wrap ("%{F" ++ yellow ++ "} ") "%{F-}". shorten 20
-                 }
+myConf = def
+         { modMask            = mod4Mask
+         , terminal           = "termite --title=termite"
+         , borderWidth        = 1
+         , startupHook        = setWMName "LG3D"
+         , focusedBorderColor = cyan
+         , normalBorderColor  = black
+         , focusFollowsMouse  = False
+         , clickJustFocuses   = False
+         , manageHook         = manageDocks <+> manageHook def
+         , handleEventHook    = handleEventHook def <+> docksEventHook <+> fullscreenEventHook
+         , layoutHook         = avoidStruts $ myLayoutHook
+         }
+         `removeKeys` keysToRemove
+         `additionalKeys` myKeys
 
 -- Emit a DBus signal on log updates
 dbusOutput :: D.Client -> String -> IO ()
@@ -180,6 +168,20 @@ dbusOutput dbus str = do
     interfaceName = D.interfaceName_ "org.xmonad.Log"
     memberName = D.memberName_ "Update"
 
+myLogHook :: D.Client -> PP
+myLogHook dbus = def
+                 { ppOutput  = dbusOutput dbus
+                 , ppCurrent = wrap ("%{B" ++ cyan ++ "} ") " %{B-}"
+                 , ppVisible = wrap ("%{B" ++ blue ++ "} ") " %{B-}"
+                 , ppUrgent  = wrap  ("%{F" ++ red ++ "} ") " %{F-}"
+                 , ppHidden  = wrap  ("%{B" ++ black ++ "} ") " %{B-}"
+                 , ppLayout  = \_ -> ""
+                 , ppWsSep   = ""
+                 , ppSep     = "  "
+                 , ppTitle   = wrap ("%{F" ++ yellow ++ "} ") "%{F-}". shorten 20
+                 }
+
+
 main :: IO ()
 main = do
   spawn "run-polybar" -- ln run-polybar .local/bin/
@@ -188,7 +190,7 @@ main = do
        (D.busName_ "org.xmonad.Log")
        [D.nameAllowReplacement, D.nameReplaceExisting, D.nameDoNotQueue]
 
-  xmonad $ ewmh conf
+  xmonad $ ewmh myConf
     {
       logHook = dynamicLogWithPP (myLogHook dbus)
     }

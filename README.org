@@ -1,0 +1,6 @@
+* TODO
+** Document dependencies (Polybar, xmonad, xmonad-contrib, haskell-dbus, taffybar?)
+** Install instructions (Use stack?)
+** No git submodules
+** Don't use stack, unless completly necessary
+** DEPENDECIES -> libdbusmenu-gtk3
