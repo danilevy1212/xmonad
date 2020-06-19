@@ -1,0 +1,7 @@
+#!/bin/sh
+
+set -e
+
+stack install my-xmonad:exe:xmonad --local-bin-path .
+
+mv xmonad "$1"

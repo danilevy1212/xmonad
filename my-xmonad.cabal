@@ -8,7 +8,7 @@ maintainer:          daniellevymoreno@gmail.com
 build-type:          Simple
 cabal-version:       >= 1.10
 
-executable my-xmonad
+executable xmonad
   main-is:             xmonad.hs
 --  other-modules:
   build-depends:       base
