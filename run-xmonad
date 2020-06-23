@@ -1,19 +1,25 @@
 #!/bin/sh
 [ -f ~/.Xresources ] && xrdb -merge -I ~/.Xresources
 
-setxkbmap -layout "us(altgr-intl)" -option "ctrl:nocaps" -option "grp:shifts_toggle"
+setxkbmap -layout "us(altgr-intl)" -option "ctrl:nocaps"
 xsetroot -cursor_name left_ptr
 xset r rate 300 50 &
-picom &
+
+if [ -n "$(command picom)" ]; then
+    picom &
+elif [ -n "$(command compton)" ]; then
+    picom &
+fi
+
 nm-applet &
 dropbox start &
 pactl load-module module-bluetooth-discover &
 blueman-applet &
-udiskie -a -s --terminal="termite" &
+udiskie -a -s &
 
-if [ -n "$WORK_STATION" ]; then
+if [ -n "$(command gnome-screensaver)" ]; then
     gnome-screensaver &
-else
+elif [ -n "$(command xscreensaver)" ]; then
     xscreensaver -no-splash &
 fi
 
