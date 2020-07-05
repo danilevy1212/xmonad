@@ -15,11 +15,11 @@ modules-right              = memory filesystem pulseaudio battery menu-apps
 modules-center             = date
 modules-left               = xmonad cpu wired-network wireless-network
 tray-position              = right
-font-0                     = "Ubuntu Mono:size      =11:style=Regular;3"
+font-0                     = "Robot Mono:size       =8:style=Regular;3"
 font-1                     = "Noto Sans CJK JP:size =13:style=Regular;3"
-font-2                     = "Ubuntu Mono:size      =11:style=Bold;3"
+font-2                     = "Roboto Mono:size      =8:style=Bold;3"
 font-3                     = "Noto Sans CJK JP:size =13:style=Bold;3"
-font-4                     = "Ubuntu Mono:size      =11:style=Italic;3"
+font-4                     = "Roboto Mono:size      =8:style=Italic;3"
 font-5                     = "Noto Sans CJK JP:size =13:style=Italic;3"
 font-6                     = "Noto Color Emoji:scale=10:style=Regular"
 font-7                     = "FontAwesome:scale=10:style=Regular"

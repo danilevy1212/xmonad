@@ -14,6 +14,7 @@ import           XMonad.Layout.Tabbed
 import           XMonad.Layout.TwoPane
 import qualified XMonad.StackSet as W
 import           XMonad.Util.EZConfig (additionalKeys, removeKeys)
+import           XMonad.Util.SpawnOnce
 
 import qualified DBus as D
 import qualified DBus.Client as D
@@ -184,7 +185,7 @@ myLogHook dbus = def
 
 main :: IO ()
 main = do
-  spawn "run-polybar" -- ln run-polybar .local/bin/
+  return $ spawnOnce "run-polybar" -- ln run-polybar .local/bin/
   dbus <- D.connectSession
   _ <- D.requestName dbus
        (D.busName_ "org.xmonad.Log")
