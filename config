@@ -11,7 +11,7 @@ white                      = #abb2bf
 darkness                   = #000
 
 [bar/topbar]
-modules-right              = memory filesystem pulseaudio battery menu-apps
+modules-right              = memory filesystem pulseaudio battery backlight menu-apps
 modules-center             = date
 modules-left               = xmonad cpu wired-network wireless-network
 tray-position              = right
@@ -135,7 +135,7 @@ time-format = %H:%M
 format-charging = <animation-charging> <label-charging>
 format-discharging = <animation-discharging> <label-discharging>
 
-label-charging = %time%
+label-charging = "%time%  "
 animation-charging-0 = "  %{F#e06c75}%{F-}"
 animation-charging-1 = "  %{F#e06c75}%{F-}"
 animation-charging-2 = "  %{F#e5c07b}%{F-}"
@@ -143,7 +143,7 @@ animation-charging-3 = "  %{F#98c379}%{F-}"
 animation-charging-4 = "  %{F#98c379}%{F-}"
 animation-charging-framerate = 500
 
-label-discharging = %percentage%%
+label-discharging = "%percentage%%  "
 animation-discharging-0 = "  %{F#98c379}%{F-}"
 animation-discharging-1 = "  %{F#98c379}%{F-}"
 animation-discharging-2 = "  %{F#e5c07b}%{F-}"
@@ -152,3 +152,16 @@ animation-discharging-4 = "  %{F#e06c75}%{F-}"
 animation-discharging-framerate = 500
 
 label-full ="  %{F#98c379}%{F-}"
+
+[module/backlight]
+type = internal/backlight
+
+# Use the following command to list available cards:
+# $ ls -1 /sys/class/backlight/
+card = intel_backlight
+
+format = "🌕 <bar> "
+bar-width = 10
+bar-indicator = |
+bar-fill = ─
+bar-empty = ─
