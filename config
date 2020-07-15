@@ -151,7 +151,7 @@ animation-discharging-3 = "  %{F#e06c75}%{F-}"
 animation-discharging-4 = "  %{F#e06c75}%{F-}"
 animation-discharging-framerate = 500
 
-label-full ="  %{F#98c379}%{F-}"
+label-full ="  %{F#98c379}%{F-}  "
 
 [module/backlight]
 type = internal/backlight
