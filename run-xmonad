@@ -25,6 +25,5 @@ fi
 
 ibus-daemon -drx --panel /usr/lib/ibus/ibus-ui-gtk3 &
 sh ~/.xmonad/wallpaper_switcher &
-polybar topbar -c ~/.xmonad/polybar-config.ini &
 
 exec xmonad

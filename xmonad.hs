@@ -131,30 +131,13 @@ myTabConfig = def
               , fontName            = "xft:Ubuntu Mono:size=13:antialias=true"
               }
 
-myLayoutHook =
-  smartBorders $ myGrid ||| myTwoPane ||| myTabbedLayout
+myLayoutHook = smartBorders $ myGrid ||| myTwoPane ||| myTabbedLayout
   where
     myBorder       = Border 10 10 10 10
     mySpacing      = spacingRaw True myBorder True myBorder True
     myGrid         = mySpacing $ Grid (16/9)
     myTwoPane      = mySpacing $ TwoPane (3/100) (1/2)
     myTabbedLayout = noBorders $ tabbed shrinkText myTabConfig
-
-myConf = def
-         { modMask            = mod4Mask
-         , terminal           = "termite --title=termite"
-         , borderWidth        = 1
-         , startupHook        = setWMName "LG3D"
-         , focusedBorderColor = cyan
-         , normalBorderColor  = black
-         , focusFollowsMouse  = False
-         , clickJustFocuses   = False
-         , manageHook         = manageDocks <+> manageHook def
-         , handleEventHook    = handleEventHook def <+> docksEventHook <+> fullscreenEventHook
-         , layoutHook         = avoidStruts $ myLayoutHook
-         }
-         `removeKeys` keysToRemove
-         `additionalKeys` myKeys
 
 -- Emit a DBus signal on log updates
 dbusOutput :: D.Client -> String -> IO ()
@@ -185,13 +168,26 @@ myLogHook dbus = def
 
 main :: IO ()
 main = do
-  return $ spawnOnce "run-polybar" -- ln run-polybar .local/bin/
   dbus <- D.connectSession
   _ <- D.requestName dbus
        (D.busName_ "org.xmonad.Log")
        [D.nameAllowReplacement, D.nameReplaceExisting, D.nameDoNotQueue]
-
-  xmonad $ ewmh myConf
-    {
-      logHook = dynamicLogWithPP (myLogHook dbus)
-    }
+  xmonad $ ewmh $ def
+         { modMask            = mod4Mask
+         , terminal           = "termite --title=termite"
+         , borderWidth        = 1
+         , focusedBorderColor = cyan
+         , normalBorderColor  = black
+         , focusFollowsMouse  = False
+         , clickJustFocuses   = False
+         , manageHook         = manageDocks <+> manageHook def
+         , handleEventHook    = handleEventHook def <+>
+                                docksEventHook <+>
+                                fullscreenEventHook
+         , layoutHook         = avoidStruts $ myLayoutHook
+         , logHook            = dynamicLogWithPP (myLogHook dbus)
+         , startupHook        = spawn "run-polybar" <+>
+                                setWMName "LG3D"
+         }
+         `removeKeys` keysToRemove
+         `additionalKeys` myKeys
