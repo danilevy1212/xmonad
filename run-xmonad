@@ -16,6 +16,7 @@ dropbox start &
 pactl load-module module-bluetooth-discover &
 blueman-applet &
 udiskie -a -s &
+dunst &
 
 if [ -n "$(command -v gnome-screensaver)" ]; then
     gnome-screensaver &
@@ -24,6 +25,11 @@ elif [ -n "$(command -v xscreensaver)" ]; then
 fi
 
 ibus-daemon -drx --panel /usr/lib/ibus/ibus-ui-gtk3 &
-sh ~/.xmonad/wallpaper_switcher &
+sh ~/.config/xmonad/wallpaper_switcher &
+
+if [ -n "$(command -v gnome-keyring)" ]; then
+    eval $(/usr/bin/gnome-keyring-daemon --start --components=pkcs11,secrets,ssh)
+    export SSH_AUTH_SOCK
+fi
 
 exec xmonad

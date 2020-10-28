@@ -15,11 +15,12 @@ executable xmonad
                      , X11
                      , utf8-string
                      , dbus >= 1.2.14
-                     , xmonad >= 0.15
-                     , xmonad-contrib >= 0.16
+                     , xmonad
+                     , xmonad-contrib
   default-language:    Haskell2010
   ghc-options:         -Wall
                        -threaded
                        -haddock
+                       -O2
                        -funbox-strict-fields
                        -fno-warn-unused-do-bind

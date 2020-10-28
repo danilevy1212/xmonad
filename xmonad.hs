@@ -77,7 +77,8 @@ myKeys =
   [
     ((mod4Mask, xK_f), spawn "emacs")
   , ((mod4Mask, xK_m), spawn "firefox")
-  , ((mod4Mask, xK_g), spawn "if [ ! $(command -v nvim-qt ) ]; then gvim; else nvim-qt; fi") , ((mod4Mask .|. shiftMask, xK_m), spawn "firefox -private-window")
+  , ((mod4Mask, xK_g), spawn "if [ ! $(command -v nvim-qt ) ]; then gvim; else nvim-qt; fi")
+  , ((mod4Mask .|. shiftMask, xK_m), spawn "firefox -private-window")
   , ((mod4Mask .|. shiftMask, xK_s), spawn "spotify")
   , ((mod4Mask, xK_p), spawn "dmenu_run -l 10 -i")
   , ((mod4Mask, xK_x), spawn "maim -s | xclip -selection clipboard -t image/png")
@@ -128,7 +129,7 @@ myTabConfig = def
               , activeTextColor     = white
               , inactiveTextColor   = white
               , urgentTextColor     = white
-              , fontName            = "xft:Ubuntu Mono:size=13:antialias=true"
+              , fontName            = "xft:Hack:size=13:antialias=true"
               }
 
 myLayoutHook = smartBorders $ myGrid ||| myTwoPane ||| myTabbedLayout
