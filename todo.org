@@ -1,0 +1,17 @@
+#+TITLE: Todo
+
+
+
+* TODO Install instructions
+
+* TODO I INSTALLED https://github.com/EliverLara/Nordic and I am looking at https://wiki.archlinux.org/index.php/GTK to install it.
+
+* TODO IDE like features with emacs.
+
+* TODO Use package.yaml instead of cabal file
+
+https://quinoa42.github.io/en/oceanus/hie-and-xmonad/
+
+* TODO Check out alternative deployment.
+
+Not really helping you directly in doing it the way you're asking but maybe something in my blog post serves of help, since it seems most of the software you want to configure is what I have as well: https://gvolpe.com/blog/xmonad-polybar-nixos/

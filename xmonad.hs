@@ -14,7 +14,6 @@ import           XMonad.Layout.Tabbed
 import           XMonad.Layout.TwoPane
 import qualified XMonad.StackSet as W
 import           XMonad.Util.EZConfig (additionalKeys, removeKeys)
-import           XMonad.Util.SpawnOnce
 
 import qualified DBus as D
 import qualified DBus.Client as D
