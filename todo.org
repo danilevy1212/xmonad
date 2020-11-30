@@ -1,9 +1,5 @@
 #+TITLE: Todo
 
-
-
-* TODO Install instructions
-
 * TODO I INSTALLED https://github.com/EliverLara/Nordic and I am looking at https://wiki.archlinux.org/index.php/GTK to install it.
 
 * TODO IDE like features with emacs.

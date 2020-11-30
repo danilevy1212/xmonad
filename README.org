@@ -6,20 +6,36 @@
 =Xmonad= is a window manager written in =haskell=, a general purpose purely
 functional programming language.
 
+* Installation
+
+Preresquisites:
+
++ stack :: Builder of the xmonad binary.
++ nix :: Package manager for external dependencies.
+
+Clone this repository somewhere where =xmonad= can find it's ~xmonad.hs~ file:
+
+#+begin_src shell
+git clone https://github.com/danilevy1212/xmonad.git ~/.xmonad
+#+end_src
+
+or
+
+#+begin_src shell
+git clone https://github.com/danilevy1212/xmonad.git ~/.config/xmonad
+#+end_src
+
+From the project root directory, run:
+
+#+begin_src shell
+stack install --nix
+#+end_src
+
+For development, it is recommended to install [[https://github.com/haskell/haskell-language-server][Haskell Language Server]]
+
 * _Warning_
 
 The current repository is under heavy changes. =Nix= is being used along with
 =stack= for the installation of dependencies and some extra experimentation needs
 to be done before deciding on what the proper way of installing this
 repositories files and output binaries is.
-
-* TODO
-** Install instructions
-** No git submodules
-** DEPENDECIES -> libdbusmenu-gtk3
-
-** I INSTALLED https://github.com/EliverLara/Nordic and I am looking at https://wiki.archlinux.org/index.php/GTK to install it.
-
-REFERENCE: https://quinoa42.github.io/en/oceanus/hie-and-xmonad/
-
-Not really helping you directly in doing it the way you're asking but maybe something in my blog post serves of help, since it seems most of the software you want to configure is what I have as well: https://gvolpe.com/blog/xmonad-polybar-nixos/
