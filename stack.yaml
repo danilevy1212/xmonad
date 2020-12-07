@@ -8,12 +8,5 @@ extra-deps:
 flags: {}
 
 nix:
-  packages:
-    - xorg.libX11
-    - xorg.libXext
-    - xorg.libXinerama
-    - xorg.libXrandr
-    - xorg.libXrender
-    - xorg.libXScrnSaver
-    - xorg.libXft
-    - pkgconfig
+  enable: true
+  shell-file: shell.nix
