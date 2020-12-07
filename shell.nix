@@ -1,7 +1,7 @@
-{ pkgs ? import <nixpkgs> {} }:
+{ghc}:
+with (import <nixpkgs> {});
 
-with pkgs;
-mkShell {
+haskell.lib.buildStackProject {
   inherit ghc;
   name = "xmonad";
   buildInputs = [
