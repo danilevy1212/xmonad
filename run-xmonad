@@ -12,11 +12,9 @@ elif [ -n "$(command -v compton)" ]; then
 fi
 
 nm-applet &
-dropbox start &
 pactl load-module module-bluetooth-discover &
 blueman-applet &
 udiskie -a -s &
-dunst &
 
 if [ -n "$(command -v gnome-screensaver)" ]; then
     gnome-screensaver &

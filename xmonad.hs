@@ -14,6 +14,7 @@ import           XMonad.Layout.Tabbed
 import           XMonad.Layout.TwoPane
 import qualified XMonad.StackSet as W
 import           XMonad.Util.EZConfig (additionalKeys, removeKeys)
+import           XMonad.Util.SpawnOnce(spawnOnce)
 
 import qualified DBus as D
 import qualified DBus.Client as D
@@ -187,7 +188,8 @@ main = do
          , layoutHook         = avoidStruts $ myLayoutHook
          , logHook            = dynamicLogWithPP (myLogHook dbus)
          , startupHook        = spawn "run-polybar" <+>
-                                setWMName "LG3D"
+                                setWMName "LG3D" <+>
+                                spawnOnce "dunst"
          }
          `removeKeys` keysToRemove
          `additionalKeys` myKeys
