@@ -187,8 +187,7 @@ main = do
                                 fullscreenEventHook
          , layoutHook         = avoidStruts $ myLayoutHook
          , logHook            = dynamicLogWithPP (myLogHook dbus)
-         , startupHook        = spawn "run-polybar" <+>
-                                setWMName "LG3D" <+>
+         , startupHook        = setWMName "LG3D" <+>
                                 spawnOnce "dunst"
          }
          `removeKeys` keysToRemove
