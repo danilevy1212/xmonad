@@ -1,18 +1,5 @@
 #+TITLE: Todo
 
-* TODO I INSTALLED https://github.com/EliverLara/Nordic and I am looking at https://wiki.archlinux.org/index.php/GTK to install it.
-
-* TODO Make a shell.nix for `hls` and other dependecies.
-
-https://nixos.wiki/wiki/FAQ/I_installed_a_library_but_my_compiler_is_not_finding_it._Why%3F
-
-Maybe necessary to use a overlay for haskell-language-version, pinning stack
-8.8.4: https://nixos.wiki/wiki/Overlays
-
 * TODO Use package.yaml instead of cabal file
 
 https://quinoa42.github.io/en/oceanus/hie-and-xmonad/
-
-* TODO Check out alternative deployment.
-
-Not really helping you directly in doing it the way you're asking but maybe something in my blog post serves of help, since it seems most of the software you want to configure is what I have as well: https://gvolpe.com/blog/xmonad-polybar-nixos/
