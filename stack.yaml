@@ -10,3 +10,4 @@ flags: {}
 nix:
   enable: true
   shell-file: shell.nix
+  pure: false # Let it capture env variables.

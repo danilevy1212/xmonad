@@ -3,3 +3,5 @@
 * TODO Use package.yaml instead of cabal file
 
 https://quinoa42.github.io/en/oceanus/hie-and-xmonad/
+
+* TODO [[https://www.youtube.com/watch?v=gPQ9mn9Nkpc&t=218s][Inspiration from distrotube]]

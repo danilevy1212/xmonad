@@ -1,3 +1,4 @@
+import System.Exit (exitSuccess)
 import qualified Codec.Binary.UTF8.String as UTF8
 import Control.Applicative ()
 import qualified DBus as D
@@ -11,7 +12,6 @@ import Graphics.X11.ExtraTypes.XF86
     xF86XK_AudioRaiseVolume,
     xF86XK_AudioStop,
   )
-import System.Exit (ExitCode (..), exitWith)
 import XMonad
   ( Default (def),
     KeyMask,
@@ -50,7 +50,6 @@ import XMonad
     xK_c,
     xK_e,
     xK_f,
-    xK_g,
     xK_j,
     xK_k,
     xK_m,
@@ -90,7 +89,6 @@ import XMonad.Hooks.ManageDocks
     manageDocks,
   )
 import XMonad.Hooks.SetWMName (setWMName)
-import XMonad.Layout (Choose)
 import XMonad.Layout.GridVariants (Grid (Grid))
 import XMonad.Layout.NoBorders (noBorders, smartBorders)
 import XMonad.Layout.SimpleDecoration
@@ -113,7 +111,6 @@ import XMonad.Layout.Tabbed (tabbed)
 import XMonad.Layout.TwoPane (TwoPane (TwoPane))
 import qualified XMonad.StackSet as W
 import XMonad.Util.EZConfig (additionalKeys, removeKeys)
-import XMonad.Util.SpawnOnce (spawnOnce)
 
 -- TODO Get the colors from Xresouces --> https://www.reddit.com/r/xmonad/comments/9uqz76/using_x_resources_in_xmonadhs_and_xmobarrc/
 -- https://github.com/mpenet/xmonad/blob/master/.Xresources
@@ -174,9 +171,10 @@ myKeys =
     -- Spawning processes
     [ -- FIXME switch to brave!
       ((mod4Mask, xK_f), spawn "emacs"),
-      ((mod4Mask, xK_m), spawn "firefox"),
+      ((mod4Mask .|. shiftMask, xK_f), spawn "emacsclient --eval '(emacs-everywhere)'"),
+      ((mod4Mask, xK_b), spawn "brave"),
       -- , ((mod4Mask, xK_g), spawn "if [ ! $(command -v nvim-qt ) ]; then gvim; else nvim-qt; fi") FIXME Deprecated
-      ((mod4Mask .|. shiftMask, xK_m), spawn "firefox -private-window"),
+      ((mod4Mask .|. shiftMask, xK_b), spawn "firefox -private-window"),
       ((mod4Mask .|. shiftMask, xK_s), spawn "spotify"),
       ((mod4Mask, xK_p), spawn "dmenu_run -l 10 -i"), -- FIXME Use native Prompt from contrib instead!
       ((mod4Mask, xK_x), spawn "flameshot gui")
@@ -188,10 +186,10 @@ myKeys =
       ),
       -- Quit xmonad
       ( (mod4Mask .|. shiftMask, xK_r),
-        io (exitWith ExitSuccess)
+        io (exitSuccess)
       ),
       -- Lock screen with a cool screensaver
-      ((mod4Mask .|. shiftMask, xK_z), spawn "xscreensaver-command -lock"),
+      ((mod4Mask .|. shiftMask, xK_z), spawn "slock"),
       -- Lock screen turning off monitor
       ((mod4Mask .|. shiftMask .|. controlMask, xK_z), spawn "xscreensaver-command -suspend")
     ]
@@ -291,7 +289,7 @@ main = do
             handleEventHook def
               <+> docksEventHook
               <+> fullscreenEventHook,
-          layoutHook = avoidStruts $ myLayoutHook,
+          layoutHook = avoidStruts myLayoutHook,
           logHook = dynamicLogWithPP (myLogHook dbus),
           startupHook = setWMName "LG3D"
         }
